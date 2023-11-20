@@ -10,7 +10,6 @@ import {
 export function gitVersion(): string {
   const cmd = 'git --version';
   const output = child_process.execSync(cmd, { encoding: 'utf-8' });
-  console.log(output);
 
   return output.trim();
 }
