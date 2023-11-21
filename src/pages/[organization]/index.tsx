@@ -1,10 +1,12 @@
 import React from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-
-import './index.scss'
+import Link from 'next/link'
 
 import { listOrgs, listRepos } from '@/utils'
+import ListView from '@/components/ListView'
+
+import './index.scss'
 
 interface Props {
   name: string;
@@ -19,19 +21,29 @@ const OrganizationIndex = (props: Props) => {
       </Head>
       <main className="organization-index">
         <h2>{props.name}</h2>
-        <div>
-          <h3>Repositories</h3>
-          <a href={`${props.name}/new`}>
+        <div className="title-bar">
+          <h3 className="title">
+            Repositories
+          </h3>
+          <Link href={`${props.name}/new`}>
             <button>New</button>
-          </a>
+          </Link>
         </div>
-        <ul>
+        <ListView
+          width={720}
+          rowHeight={32}
+        >
           {props.repositories.map(repo => (
-            <li key={repo}>
-              <a href={`${props.name}/${repo}`}>{repo}</a>
-            </li>
+            <Link key={repo}
+              href={`${props.name}/${repo}`}
+              style={{
+                width: '100%',
+              }}
+            >
+              {repo}
+            </Link>
           ))}
-        </ul>
+        </ListView>
       </main>
     </>
   );
