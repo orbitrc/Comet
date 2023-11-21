@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Link from 'next/link'
+
 import './OrganizationItem.scss'
 
 interface OrganizationItemProps {
@@ -11,7 +13,7 @@ const OrganizationItem = (props: OrganizationItemProps) => {
     <div
       className="comet-organization-item"
     >
-      <a
+      <Link
         className="link"
         href={props.name}
       >
@@ -26,7 +28,7 @@ const OrganizationItem = (props: OrganizationItemProps) => {
         >
           {props.name}
         </span>
-      </a>
+      </Link>
     </div>
   );
 }
