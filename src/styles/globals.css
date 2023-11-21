@@ -107,3 +107,34 @@ a {
     color-scheme: dark;
   }
 }
+
+/* CometHeader.tsx simple, ugly hack. */
+.comet-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid black;
+}
+
+.comet-header .title {
+  font-size: 24px;
+}
+
+.comet-header .tab-bar {
+  display: flex;
+}
+
+.comet-header .tab-bar div::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: #80b8d2;
+  margin-right: 4px;
+}
+
+.comet-header .tab-bar div {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
