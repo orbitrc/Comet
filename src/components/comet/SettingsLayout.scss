@@ -1,0 +1,14 @@
+.comet-settings-layout {
+  display: flex;
+
+  .navigation {
+    display: flex;
+    flex-direction: column;
+    margin-right: 32px;
+
+    .list-item {
+      width: 128px;
+      padding-left: 8px;
+    }
+  }
+}
