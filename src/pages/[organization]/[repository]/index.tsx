@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 import { GetServerSideProps } from 'next'
 
 import {
@@ -13,9 +14,21 @@ interface Props {
   repository: string;
   branches: string[];
   head: string;
+  host: string;
 }
 
 const RepositoryIndex = (props: Props) => {
+  const [cloneType, setCloneType] = useState<string>('ssh');
+
+  function cloneUrl() {
+    const host = props.host;
+    if (cloneType === 'https') {
+      return `https://${host}/${props.organization}/${props.repository}.git`;
+    } else {
+      return `git@${host}:${props.organization}/${props.repository}.git`;
+    }
+  }
+
   return (
     <div className="repository-index">
       <h2>Repo</h2>
@@ -25,6 +38,29 @@ const RepositoryIndex = (props: Props) => {
         <span>{props.repository}</span>
       </div>
       <div>
+        <h3>Clone</h3>
+        <div>
+          <button
+            onClick={() => {
+              setCloneType('https');
+            }}
+          >
+            HTTPS
+          </button>
+          <button
+            onClick={() => {
+              setCloneType('ssh');
+            }}
+          >
+            SSH
+          </button>
+          <input readOnly
+            value={cloneUrl()}
+            style={{
+              width: '512px',
+            }}
+          />
+        </div>
         <h3>Branches</h3>
         <ul>
           {props.branches.map(branch => (
@@ -55,6 +91,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const branches = listBranches(`${organization}/${repository}`);
   const head = getHeadBranch(`${organization}/${repository}`);
+  const host = context.req.headers.host;
 
   return {
     props: {
@@ -62,6 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       repository: repository,
       branches: branches,
       head: head,
+      host: host,
     },
   };
 }
